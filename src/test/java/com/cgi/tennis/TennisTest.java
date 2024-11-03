@@ -59,7 +59,7 @@ class TennisTest {
     @ParameterizedTest
     @MethodSource("refactoringSteps")
     public void checkTennisGameToBeRefactored(Class<? extends TennisGame> clazz, int pointsPlayer1, int pointsPlayer2, String exepctedResult) {
-        TennisGame game = new ToBeRefactored("player1", "player2");
+        TennisGame game = new TennisGameRefactored("player1", "player2");
         checkAllScores(game, pointsPlayer1, pointsPlayer2, "player1", "player2", exepctedResult);
     }
 
