@@ -8,8 +8,8 @@ public class Score {
 
     private int p;
 
-    public Score(int p) {
-        this.p = p;
+    public Score() {
+        this.p = 0;
     }
 
     public void increment() {

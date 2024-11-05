@@ -2,22 +2,21 @@ package com.cgi.tennis;
 
 import com.cgi.tennis.score.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-// Wrap primitive types
+// Created class collections/HashMaps
 public class TennisGameRefactored implements TennisGame {
 
-    private final Score p1;
-    private final Score p2;
-    private final Player p1N;
-    private final Player p2N;
+    private final Map<Integer, Player> players = new HashMap<Integer, Player>();
+    private final Map<Integer, Score> scores = new HashMap<>();
 
     public TennisGameRefactored(String p1N, String p2N) {
-
-        this.p1 = new Score(0);
-        this.p2 = new Score(0);
-        this.p1N = new Player(p1N);
-        this.p2N = new Player(p2N);
+        players.put(1, new Player(p1N));
+        players.put(2, new Player(p2N));
+        scores.put(1, new Score());
+        scores.put(2, new Score());
     }
 
     public String getScore() {
@@ -26,13 +25,13 @@ public class TennisGameRefactored implements TennisGame {
 
     private ScoreStrategy determineScoreStrategy() {
 
-        if (p1.getP() < 4 && p2.getP() < 4 && !(p1.getP() + p2.getP() == 6)) {
-            return new RegularScore(p1, p2);
+        if (scores.get(1).getP() < 4 && scores.get(2).getP() < 4 && !(scores.get(1).getP() + scores.get(2).getP() == 6)) {
+            return new RegularScore(scores.get(1), scores.get(2));
         }
-        if (p1.getP() == p2.getP()) {
+        if (scores.get(1).getP() == scores.get(2).getP()) {
             return new DeuceScore();
         }
-        if ((p1.getP()-p2.getP())*(p1.getP()-p2.getP()) == 1) {
+        if ((scores.get(1).getP()-scores.get(2).getP())*(scores.get(1).getP()-scores.get(2).getP()) == 1) {
             return new AdvantageScore(getLeadingPlayer());
         }
         return new WinScore(getLeadingPlayer());
@@ -40,14 +39,14 @@ public class TennisGameRefactored implements TennisGame {
     }
 
     private Player getLeadingPlayer() {
-        return p1.getP() > p2.getP() ? p1N : p2N;
+        return scores.get(1).getP() > scores.get(2).getP() ? players.get(1) : players.get(2);
     }
 
     public void wonPoint(String playerName) {
-        if (Objects.equals(playerName, this.p1N.getPN()))
-            this.p1.increment();
+        if (Objects.equals(playerName, this.players.get(1).getPN()))
+            this.scores.get(1).increment();
         else // Could also be removed but doesn't really hurt readability here
-            this.p2.increment();
+            this.scores.get(2).increment();
 
     }
 }
