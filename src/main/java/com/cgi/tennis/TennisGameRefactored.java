@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-// Created class collections/HashMaps
+// "Tell don't ask"
 public class TennisGameRefactored implements TennisGame {
 
     private final Map<Integer, Player> players = new HashMap<Integer, Player>();
@@ -25,13 +25,16 @@ public class TennisGameRefactored implements TennisGame {
 
     private ScoreStrategy determineScoreStrategy() {
 
-        if (scores.get(1).getP() < 4 && scores.get(2).getP() < 4 && !(scores.get(1).getP() + scores.get(2).getP() == 6)) {
-            return new RegularScore(scores.get(1), scores.get(2));
+        Score score1 = scores.get(1);
+        Score score2 = scores.get(2);
+
+        if (score1.isLessThan(4) && score2.isLessThan(4) && !(score1.sumIsEqualTo(score2, 6))) {
+            return new RegularScore(score1, score2);
         }
-        if (scores.get(1).getP() == scores.get(2).getP()) {
+        if (score1.isEqualTo(score2)) {
             return new DeuceScore();
         }
-        if ((scores.get(1).getP()-scores.get(2).getP())*(scores.get(1).getP()-scores.get(2).getP()) == 1) {
+        if ((score1.subtract(score2) * (score1.subtract(score2)) == 1)) {
             return new AdvantageScore(getLeadingPlayer());
         }
         return new WinScore(getLeadingPlayer());
@@ -39,7 +42,7 @@ public class TennisGameRefactored implements TennisGame {
     }
 
     private Player getLeadingPlayer() {
-        return scores.get(1).getP() > scores.get(2).getP() ? players.get(1) : players.get(2);
+        return scores.get(1).isHigher(scores.get(2)) ? players.get(1) : players.get(2);
     }
 
     public void wonPoint(String playerName) {
