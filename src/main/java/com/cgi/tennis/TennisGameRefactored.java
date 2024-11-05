@@ -5,7 +5,7 @@ import com.cgi.tennis.manager.GameStateManager;
 import java.util.HashMap;
 import java.util.Map;
 
-// Single Responsibility Principle -> Most of the score management is moved to a dedicated class
+// Cohesion Improvement -> Score is now directly related to Player
 public class TennisGameRefactored implements TennisGame {
 
     GameStateManager gameStateManager;
@@ -14,10 +14,7 @@ public class TennisGameRefactored implements TennisGame {
         Map<Integer, Player> players = new HashMap<>();
         players.put(1, new Player(playerName1));
         players.put(2, new Player(playerName2));
-        Map<Integer, Score> scores = new HashMap<>();
-        scores.put(1, new Score());
-        scores.put(2, new Score());
-        gameStateManager = new GameStateManager(players, scores);
+        gameStateManager = new GameStateManager(players);
     }
 
     public String getScore() {

@@ -10,12 +10,9 @@ import java.util.Objects;
 public class GameStateManager implements GameState{
 
     private final Map<Integer, Player> players;
-    private final Map<Integer, Score> scores;
 
-    public GameStateManager(Map<Integer, Player> players, Map<Integer, Score> scores) {
-
+    public GameStateManager(Map<Integer, Player> players) {
         this.players = players;
-        this.scores = scores;
     }
 
     @Override
@@ -25,17 +22,28 @@ public class GameStateManager implements GameState{
 
     @Override
     public void handlePointIncrement(String playerName) {
+        Player playerToIncrement = findPlayerByName(playerName);
 
-        if (Objects.equals(playerName, this.players.get(1).getName()))
-            this.scores.get(1).increment();
-        else
-            this.scores.get(2).increment();
+        if (playerToIncrement != null) {
+            playerToIncrement.won();
+        } else {
+            System.out.println("Player not found: " + playerName);
+        }
+    }
+
+    private Player findPlayerByName(String playerName) {
+        for (Player player : players.values()) {
+            if (Objects.equals(playerName, player.getName())) {
+                return player;
+            }
+        }
+        return null;
     }
 
     private ScoreStrategy determineScoreStrategy() {
 
-        Score score1 = scores.get(1);
-        Score score2 = scores.get(2);
+        Score score1 = players.get(1).getScore();
+        Score score2 = players.get(2).getScore();
         Player player1 = players.get(1);
         Player player2 = players.get(2);
 
@@ -46,13 +54,13 @@ public class GameStateManager implements GameState{
             return new DeuceScore();
         }
         if ((score1.subtract(score2) * (score1.subtract(score2)) == 1)) {
-            return new AdvantageScore(getLeadingPlayer(score1, score2));
+            return new AdvantageScore(getLeadingPlayer(player1, player2));
         }
-        return new WinScore(getLeadingPlayer(score1, score2));
+        return new WinScore(getLeadingPlayer(player1, player2));
     }
 
-    private Player getLeadingPlayer(Score score1, Score score2) {
-        return score1.isHigher(score2) ? players.get(1) : players.get(2);
+    private Player getLeadingPlayer(Player player1, Player player2) {
+        return player1.getScore().isHigher(player2.getScore()) ? player1 : player2;
     }
 
 }
