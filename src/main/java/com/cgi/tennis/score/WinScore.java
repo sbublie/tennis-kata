@@ -3,14 +3,14 @@ package com.cgi.tennis.score;
 import com.cgi.tennis.Player;
 
 public class WinScore implements ScoreStrategy {
-    private final Player pN;
+    private final Player player;
 
-    public WinScore(Player pN) {
-        this.pN = pN;
+    public WinScore(Player player) {
+        this.player = player;
     }
 
     @Override
     public String getScore() {
-        return "Win for " + pN.getPN();
+        return "Win for " + player.getName();
     }
 }

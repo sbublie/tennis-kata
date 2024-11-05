@@ -15,7 +15,7 @@ public class RegularScore implements ScoreStrategy {
     public String getScore() {
         String s;
         String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-        s = p[score1.getP()];
-        return (score1.getP() == score2.getP()) ? s + "-All" : s + "-" + p[score2.getP()];
+        s = p[score1.getPoints()];
+        return (score1.getPoints() == score2.getPoints()) ? s + "-All" : s + "-" + p[score2.getPoints()];
     }
 }

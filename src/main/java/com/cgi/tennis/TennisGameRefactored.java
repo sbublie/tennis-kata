@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-// "Tell don't ask"
+// Abbreviations removed / variable naming improved
 public class TennisGameRefactored implements TennisGame {
 
-    private final Map<Integer, Player> players = new HashMap<Integer, Player>();
+    private final Map<Integer, Player> players = new HashMap<>();
     private final Map<Integer, Score> scores = new HashMap<>();
 
-    public TennisGameRefactored(String p1N, String p2N) {
-        players.put(1, new Player(p1N));
-        players.put(2, new Player(p2N));
+    public TennisGameRefactored(String playerName1, String playerName2) {
+        players.put(1, new Player(playerName1));
+        players.put(2, new Player(playerName2));
         scores.put(1, new Score());
         scores.put(2, new Score());
     }
@@ -46,7 +46,7 @@ public class TennisGameRefactored implements TennisGame {
     }
 
     public void wonPoint(String playerName) {
-        if (Objects.equals(playerName, this.players.get(1).getPN()))
+        if (Objects.equals(playerName, this.players.get(1).getName()))
             this.scores.get(1).increment();
         else // Could also be removed but doesn't really hurt readability here
             this.scores.get(2).increment();

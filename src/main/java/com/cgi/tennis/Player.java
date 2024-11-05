@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class Player {
-    private final String pN;
+    private final String name;
 
-    public Player(String pN) {
-        this.pN = pN;
+    public Player(String name) {
+        this.name = name;
     }
 
 }

@@ -5,28 +5,28 @@ import lombok.Getter;
 @Getter
 public class Score {
 
-    private int p = 0;
+    private int points = 0;
 
     public void increment() {
-        this.p++;
+        this.points++;
     }
 
     public boolean isLessThan(int value) {
-        return p < value;
+        return points < value;
     }
 
     public boolean isEqualTo(Score other) {
-        return this.p == other.getP();
+        return this.points == other.getPoints();
     }
     public boolean sumIsEqualTo(Score other, int value) {
-        return (this.p + other.getP()) == value;
+        return (this.points + other.getPoints()) == value;
     }
 
     public int subtract(Score other) {
-        return this.p - other.getP();
+        return this.points - other.getPoints();
     }
 
     public boolean isHigher(Score other) {
-        return this.p > other.getP();
+        return this.points > other.getPoints();
     }
 }
