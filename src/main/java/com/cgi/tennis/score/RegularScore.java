@@ -1,10 +1,12 @@
 package com.cgi.tennis.score;
 
-public class RegularScore implements ScoreStrategy {
-    private final int score1;
-    private final int score2;
+import com.cgi.tennis.Score;
 
-    public RegularScore(int score1, int score2) {
+public class RegularScore implements ScoreStrategy {
+    private final Score score1;
+    private final Score score2;
+
+    public RegularScore(Score score1, Score score2) {
         this.score1 = score1;
         this.score2 = score2;
     }
@@ -13,7 +15,7 @@ public class RegularScore implements ScoreStrategy {
     public String getScore() {
         String s;
         String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-        s = p[score1];
-        return (score1 == score2) ? s + "-All" : s + "-" + p[score2];
+        s = p[score1.getP()];
+        return (score1.getP() == score2.getP()) ? s + "-All" : s + "-" + p[score2.getP()];
     }
 }

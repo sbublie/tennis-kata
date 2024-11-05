@@ -1,14 +1,16 @@
 package com.cgi.tennis.score;
 
-public class AdvantageScore implements ScoreStrategy {
-    private final String pN;
+import com.cgi.tennis.Player;
 
-    public AdvantageScore(String pN) {
+public class AdvantageScore implements ScoreStrategy {
+    private final Player pN;
+
+    public AdvantageScore(Player pN) {
         this.pN = pN;
     }
 
     @Override
     public String getScore() {
-        return "Advantage " + pN;
+        return "Advantage " + pN.getPN();
     }
 }
