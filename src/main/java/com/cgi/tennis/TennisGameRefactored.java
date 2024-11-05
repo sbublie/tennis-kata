@@ -1,8 +1,10 @@
 package com.cgi.tennis;
 
+import com.cgi.tennis.score.*;
+
 import java.util.Objects;
 
-// Avoid multiple levels of indentation
+// Add score strategy pattern
 public class TennisGameRefactored implements TennisGame {
 
     private int p2;
@@ -16,37 +18,26 @@ public class TennisGameRefactored implements TennisGame {
     }
 
     public String getScore() {
+        return determineScoreStrategy().getScore();
+    }
+
+    private ScoreStrategy determineScoreStrategy() {
 
         if (p1 < 4 && p2 < 4 && !(p1 + p2 == 6)) {
-            return getRegularResult();
+            return new RegularScore(p1, p2);
         }
         if (p1 == p2) {
-            return "Deuce";
+            return new DeuceScore();
         }
         if ((p1-p2)*(p1-p2) == 1) {
-            return getAdvantage();
+            return new AdvantageScore(getLeadingPlayer());
         }
-        return getWin();
+        return new WinScore(getLeadingPlayer());
 
-    }
-
-    private String getWin() {
-        return "Win for " + getLeadingPlayer();
-    }
-
-    private String getAdvantage(){
-        return "Advantage " + getLeadingPlayer();
     }
 
     private String getLeadingPlayer() {
         return p1 > p2 ? p1N : p2N;
-    }
-
-    private String getRegularResult() {
-        String s;
-        String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-        s = p[p1];
-        return (p1 == p2) ? s + "-All" : s + "-" + p[p2];
     }
 
     public void wonPoint(String playerName) {
